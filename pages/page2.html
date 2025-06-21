@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hungry Hoppers</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h1 class="logo">Hungry Hoppers</h1>
+    <div class="sidebar-menus">
+      <a href="#"><ion-icon name="storefront-outline"></ion-icon>Home</a>
+      <a href="#"><ion-icon name="receipt-outline"></ion-icon>Bills</a>
+      <a href="#"><ion-icon name="wallet-outline"></ion-icon>Wallet</a>
+      <a href="#"><ion-icon name="notifications-outline"></ion-icon>Notifications</a>
+      <a href="AboutUs.html"><ion-icon name="information-circle-outline"></ion-icon>About Us</a>
+      <a href="#"><ion-icon name="settings-outline"></ion-icon>Settings</a>
+    </div>
+    <div class="sidebar-logout">
+      <a href="login.html"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+    </div>
+  </div>
+
+  <!-- Main Section -->
+  <div class="main">
+    <!-- Navbar -->
+    <div class="main-navbar">
+      <ion-icon class="menu-toggle" name="menu-outline"></ion-icon>
+      <div class="search">
+        <input type="text" placeholder="What do you want to eat?" aria-label="Search food" />
+        <button class="search-btn">Search</button>
+      </div>
+      <div class="profile">
+        <a class="cart" href="#" onclick="toggleCartPopup()">
+          <ion-icon name="cart-outline"></ion-icon>
+          <span class="cart-count" id="cart-count">0</span>
+        </a>
+        <a class="user" href="#"><ion-icon name="person-outline"></ion-icon></a>
+      </div>
+    </div>
+
+    <!-- Cart Overlay -->
+    <div id="cart-overlay" class="cart-overlay" onclick="closeCart()"></div>
+
+    <!-- Shopping Cart Popup -->
+    <div id="cart-popup" class="cart-popup" style="display: none;">
+      <h4>Shopping Cart</h4>
+      <table id="cart-items">
+        <thead>
+          <tr> 
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Price (Rs.)</th>
+            <th>Total (Rs.)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Items will be added by JavaScript -->
+        </tbody>
+      </table>
+      <p class="cart-total">Total: Rs. <span id="cart-total">0.00</span></p>
+      <a class="cart-close" onclick="closeCart()"><ion-icon name="close-circle-outline"></ion-icon></a>
+    </div>
+
+    <!-- Highlight Section -->
+    <div class="main-highlight">
+      <div class="main-header">
+        <h2 class="main-title">Recommendations</h2>
+        <div class="main-arrow">
+          <ion-icon class="back" name="chevron-back-circle-outline"></ion-icon>
+          <ion-icon class="next" name="chevron-forward-circle-outline"></ion-icon>
+        </div>
+      </div>
+
+      <div class="highlight-wrapper">
+        <div class="highlight-card">
+          <img class="highlight-img" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=100&h=100&fit=crop" alt="Fresh Salad"/>
+          <div class="highlight-desc">
+            <h4>Fresh Salad</h4>
+            <p>Rs.450</p>
+          </div>
+        </div>
+        <div class="highlight-card">
+          <img class="highlight-img" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=100&h=100&fit=crop" alt="Coffee"/>
+          <div class="highlight-desc">
+            <h4>Coffee</h4>
+            <p>Rs.320</p>
+          </div>
+        </div>
+        <div class="highlight-card">
+          <img class="highlight-img" src="https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=100&h=100&fit=crop" alt="Momo"/>
+          <div class="highlight-desc">
+            <h4>Momo</h4>
+            <p>Rs.280</p>
+          </div>
+        </div>
+        <div class="highlight-card">
+          <img class="highlight-img" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=100&h=100&fit=crop" alt="Burger"/>
+          <div class="highlight-desc">
+            <h4>Burger</h4>
+            <p>Rs.350</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menu Category Filter -->
+    <div class="main-menus">
+      <div class="main-filter">
+          <h2 class="main-title">Menu <br />Category</h2>
+          <div class="main-arrow">
+            <ion-icon class="back-menus" name="chevron-back-circle-outline"></ion-icon>
+            <ion-icon class="next-menus" name="chevron-forward-circle-outline"></ion-icon>
+          </div>
+        </div>
+
+        <div class="filter-wrapper">
+          <div class="filter-card active" onclick="filterMenu('all')">
+            <div class="filter-icon"><ion-icon name="restaurant-outline"></ion-icon></div>
+            <p>All Menus</p>
+          </div>
+          <div class="filter-card" onclick="filterMenu('burger')">
+            <div class="filter-icon"><ion-icon name="fast-food-outline"></ion-icon></div>
+            <p>Burger</p>
+          </div>
+          <div class="filter-card" onclick="filterMenu('pizza')">
+            <div class="filter-icon"><ion-icon name="pizza-outline"></ion-icon></div>
+            <p>Pizza</p>
+          </div>
+          <div class="filter-card" onclick="filterMenu('drinks')">
+            <div class="filter-icon"><ion-icon name="wine-outline"></ion-icon></div>
+            <p>Drinks</p>
+          </div>
+          <div class="filter-card" onclick="filterMenu('ice-cream')">
+            <div class="filter-icon"><ion-icon name="ice-cream-outline"></ion-icon></div>
+            <p>Ice-cream</p>
+          </div>
+          <div class="filter-card" onclick="filterMenu('coffee')">
+            <div class="filter-icon"><ion-icon name="cafe-outline"></ion-icon></div>
+            <p>Coffee</p>
+          </div>
+          <div class="filter-card" onclick="filterMenu('seafood')">
+            <div class="filter-icon"><ion-icon name="fish-outline"></ion-icon></div>
+            <p>Sea Food</p>
+          </div>
+          <div class="filter-card" onclick="filterMenu('healthy')">
+            <div class="filter-icon"><ion-icon name="nutrition-outline"></ion-icon></div>
+            <p>Healthy</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Menu Items Section -->
+      <div class="menu-items">
+        <h2 class="main-title" id="menu-section-title">All Menu Items</h2>
+        <div class="menu-grid" id="menu-grid">
+          <!-- Burger Items -->
+          <div class="menu-item" data-category="burger">
+            <img src="../images/classic.jpg" alt="Classic Burger">
+            <h4>Classic Burger</h4>
+            <p>Juicy patty with fresh vegetables</p>
+            <div class="price">Rs. 350</div>
+            <button class="add-to-cart" onclick="addToCart('Classic Burger', 350)">Add to Cart</button>
+          </div>
+          
+          <div class="menu-item" data-category="burger">
+            <img src="../images/cheese burger.jpg" alt="Cheese Burger">
+            <h4>Cheese Burger</h4>
+            <p>Classic burger with melted cheese</p>
+            <div class="price">Rs. 420</div>
+            <button class="add-to-cart" onclick="addToCart('Cheese Burger', 420)">Add to Cart</button>
+          </div>
+          
+          <div class="menu-item" data-category="burger">
+            <img src="../images/chicken.jpg" alt="Chicken Burger">
+            <h4>Chicken Burger</h4>
+            <p>Grilled chicken burger with sauce</p>
+            <div class="price">Rs. 380</div>
+            <button class="add-to-cart" onclick="addToCart('Chicken Burger', 380)">Add to Cart</button>
+          </div>
+
+          <div class="menu-item" data-category="burger">
+            <img src="../images/loaded.jpg" alt="Loaded Burger">
+            <h4>Loaded Burger</h4>
+            <p> Grilled chicken with bacon, grilled cheese and lettuce </p>
+            <div class="price">Rs.400</div>
+            <button class="add-to-cart" onclick="addToCart('Loaded Burger',400)">Add to Cart</button>
+          </div>
+          
+
+          <!-- Pizza Items -->
+          <div class="menu-item" data-category="pizza">
+            <img src="../images/margherita.jpg" alt="Margherita Pizza">
+            <h4>Margherita Pizza</h4>
+            <p>Traditional pizza with tomato and mozzarella</p>
+            <div class="price">Rs. 580</div>
+            <button class="add-to-cart" onclick="addToCart('Margherita Pizza', 580)">Add to Cart</button>
+          </div>
+          
+          <div class="menu-item" data-category="pizza">
+            <img src="../images/pepporoni.jpg" alt="Pepperoni Pizza">
+            <h4>Pepperoni Pizza</h4>
+            <p>Pizza topped with spicy pepperoni</p>
+            <div class="price">Rs. 680</div>
+            <button class="add-to-cart" onclick="addToCart('Pepperoni Pizza', 680)">Add to Cart</button>
+          </div>
+          
+          <div class="menu-item" data-category="pizza">
+            <img src="../images/cheese burst.jpg" alt="Cheese Burst Pizza">
+            <h4>Cheese Burst Pizza</h4>
+            <p>Chicken pizza with loaded chesse of your choice</p>
+            <div class="price">Rs700</div>
+            <button class="add-to-cart" onclick="addToCart('Cheese Burst Pizza',700)">Add to Cart</button>
+
+          </div>
+
+          <div class="menu-item" data-category="pizza">
+            <img src="../images/mushroom.jpg" alt="Fungi Pizza">
+            <h4>Fungi Pizza</h4>
+            <p>Mushroom with other toppings like jalapenos, tomatoes and corn</p>
+            <div class="price">Rs555</div>
+            <button class="add-to-cart" onclick="addToCart('Fungi Pizza',555)">Add to Cart</button>
+
+          </div>
+
+          <!-- Coffee Items -->
+          <div class="menu-item" data-category="coffee">
+            <img src="../images/espresso.jpg" alt="Espresso">
+            <h4>Espresso</h4>
+            <p>Strong Italian coffee</p>
+            <div class="price">Rs. 180</div>
+            <button class="add-to-cart" onclick="addToCart('Espresso', 180)">Add to Cart</button>
+          </div>
+          
+          <div class="menu-item" data-category="coffee">
+            <img src="../images/cappauccino.jpg" alt="Cappuccino">
+            <h4>Cappuccino</h4>
+            <p>Coffee with steamed milk foam</p>
+            <div class="price">Rs. 250</div>
+            <button class="add-to-cart" onclick="addToCart('Cappuccino', 250)">Add to Cart</button>
+          </div>
+
+          <div class="menu-item" data-category="coffee">
+            <img src="../images/latte.jpg" alt="Latte">
+            <h4>Latte</h4>
+            <p>Shot of espresso and a large amount of steamed milk, topped with a thin layer of milk foam.</p>
+            <div class="price">Rs. 270</div>
+            <button class="add-to-cart" onclick="addToCart('Latte', 270)">Add to Cart</button>
+          </div>
+
+          <div class="menu-item" data-category="coffee">
+            <img src="../images/mocha.jpg" alt="Mocha ">
+            <h4>Mocha</h4>
+            <p>Chilled coffee drink made by mixing espresso, cold milk, and chocolate syrup over ice, often topped with whipped cream</p>
+            <div class="price">Rs. 230</div>
+            <button class="add-to-cart" onclick="addToCart('Mocha', 230)">Add to Cart</button>
+          </div>
+          
+          
+
+          <!--Drinks -->
+
+            <div class="menu-item" data-category="drinks">
+            <img src="../images/jameson.jpg" alt="Jameson">
+            <h4>Jameson</h4>
+            <p>Irish Distilled Whiskey</p>
+            <div class="price">Rs.10000</div>
+            <button class="add-to-cart" onclick="addToCart('Jameson', 10000)">Add to Cart</button>
+          </div>
+
+            <div class="menu-item" data-category="drinks">
+            <img src="../images/jd.jpg" alt="Jack Daniels">
+            <h4>Jack Daniels</h4>
+            <p>Tennessee whiskey with smooth, slightly sweet flavor </p>
+            <div class="price">Rs.7000</div>
+            <button class="add-to-cart" onclick="addToCart('Red Wine', 7000)">Add to Cart</button>
+          </div>
+          
+          
+          <div class="menu-item" data-category="drinks">
+            <img src="../images/red wine.jpg" alt="Red Wine">
+            <h4>Red Wine</h4>
+            <p>Premium red wine bottle</p>
+            <div class="price">Rs. 2000</div>
+            <button class="add-to-cart" onclick="addToCart('Red Wine', 2000)">Add to Cart</button>
+          </div>
+          
+          <div class="menu-item" data-category="drinks">
+            <img src="../images/absolut.jpg" alt="Absolut.">
+            <h4>Absolut.</h4>
+            <p>Swedish vodka with clean, smooth and fruity taste</p>
+            <div class="price">Rs.6500</div>
+            <button class="add-to-cart" onclick="addToCart('Absolut.', 6500)">Add to Cart</button>
+          </div>
+
+          <!-- Ice Cream Items -->
+          <div class="menu-item" data-category="ice-cream">
+            <img src="../images/vanilla.jpg" alt="Vanilla Ice Cream">
+            <h4>Vanilla Ice Cream</h4>
+            <p>Creamy vanilla ice cream</p>
+            <div class="price">Rs. 150</div>
+            <button class="add-to-cart" onclick="addToCart('Vanilla Ice Cream', 150)">Add to Cart</button>
+          </div>
+          
+          <div class="menu-item" data-category="ice-cream">
+            <img src="../images/chocolate.jpg" alt="Chocolate Ice Cream">
+            <h4>Chocolate Ice Cream</h4>
+            <p>Rich chocolate ice cream</p>
+            <div class="price">Rs. 170</div>
+            <button class="add-to-cart" onclick="addToCart('Chocolate Ice Cream', 170)">Add to Cart</button>
+          </div>
+
+          <!-- Seafood Items -->
+          <div class="menu-item" data-category="seafood">
+            <img src="../images/salmon.jpg" alt="Grilled Salmon">
+            <h4>Grilled Salmon</h4>
+            <p>Fresh grilled salmon fillet</p>
+            <div class="price">Rs. 850</div>
+            <button class="add-to-cart" onclick="addToCart('Grilled Salmon', 850)">Add to Cart</button>
+          </div>
+          
+          <div class="menu-item" data-category="seafood">
+            <img src="../images/fish curry.jpg" alt="Fish Curry">
+            <h4>Fish Curry</h4>
+            <p>Spicy fish curry with rice</p>
+            <div class="price">Rs. 650</div>
+            <button class="add-to-cart" onclick="addToCart('Fish Curry', 650)">Add to Cart</button>
+          </div>
+
+          <div class="menu-item" data-category="seafood">
+            <img src="../images/lobster.jpg" alt="Lobster">
+            <h4>Lobster</h4>
+            <p>sweet, tender meat which are rich in flavours </p>
+            <div class="price">Rs. 1500</div>
+            <button class="add-to-cart" onclick="addToCart('Lobster', 1500)">Add to Cart</button>
+          </div>
+
+          <div class="menu-item" data-category="seafood">
+            <img src="../images/shrimp.jpg" alt="Shrimp">
+            <h4>Shrimp</h4>
+            <p>Tender texture and mild, slightly sweet flavor</p>
+            <div class="price">Rs.1100</div>
+            <button class="add-to-cart" onclick="addToCart('Shrimp', 1100)">Add to Cart</button>
+          </div>
+
+
+          <!-- Healthy Items -->
+          <div class="menu-item" data-category="healthy">
+            <img src="../images/green salad.jpg" alt="Green Salad">
+            <h4>Green Salad</h4>
+            <p>Fresh mixed green salad</p>
+            <div class="price">Rs. 320</div>
+            <button class="add-to-cart" onclick="addToCart('Green Salad', 320)">Add to Cart</button>
+          </div>
+          
+          <div class="menu-item" data-category="healthy">
+            <img src="../images/fruit bowl.jpg" alt="Fruit Bowl">
+            <h4>Fruit Bowl</h4>
+            <p>Seasonal fresh fruit bowl</p>
+            <div class="price">Rs. 280</div>
+            <button class="add-to-cart" onclick="addToCart('Fruit Bowl', 280)">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ionicons CDN -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  <!--js code-->
+  <script src="../app.js">
+    
+  </script>
+</body>
+</html>

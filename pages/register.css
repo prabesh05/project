@@ -1,0 +1,95 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to right, #e0f2f1, #c8e6c9);
+}
+.container {
+ background-color: transparent; /* Make the background transparent */
+ padding: 40px;
+ border-radius: 10px;
+ box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+ width: 350px;
+ text-align: center;
+ backdrop-filter: blur(0); /* Apply the blur effect */
+}
+.form h1 {
+  color:black;
+  margin-bottom: 30px;
+  font-size: 2.2em;
+}
+
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="password"] {
+  width: calc(100% - 20px);
+  padding: 12px 10px;
+  margin-bottom: 15px;
+  border: 1px solid #b2dfdb; 
+  border-radius: 5px;
+  font-size: 1em;
+  box-sizing: border-box; 
+}
+
+.form input[type="text"]:focus,
+.form input[type="email"]:focus,
+.form input[type="password"]:focus {
+  outline: none;
+  border-color: #26a69a; 
+  box-shadow: 0 0 5px rgba(38, 166, 154, 0.5); 
+}
+
+.form label {
+  display: block; 
+  text-align: left; 
+  color: #116a61; 
+  font-size:17px; 
+  margin-bottom: 5px; 
+  margin-top: 15px; 
+}
+
+.form label:first-of-type {
+  margin-top: 0;
+}
+
+p {
+  color: #616161; 
+  font-size: 0.95em;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+p a {
+  color: #26a69a;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+p a:hover {
+  text-decoration: underline;
+}
+
+button {
+  background-color: #26a69a;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: background-color 0.3s ease;
+  width: 100%; 
+  margin-top: 10px; 
+}
+
+button:hover {
+  background-color: #00897b; 
+}
+
+body{
+  background-image:url('../images/light.jpeg') ;
+
+}
