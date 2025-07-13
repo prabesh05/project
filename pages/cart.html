@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shopping Cart - Hungry Hoppers</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="cart.css">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h1 class="logo">Hungry Hoppers</h1>
+    <div class="sidebar-menus">
+      <a href="../index.html"><ion-icon name="storefront-outline"></ion-icon>Home</a>
+      <a href="#"><ion-icon name="receipt-outline"></ion-icon>Bills</a>
+      <a href="#"><ion-icon name="notifications-outline"></ion-icon>Notifications</a>
+      <a href="AboutUs.html"><ion-icon name="information-circle-outline"></ion-icon>About Us</a>
+      <a href="#"><ion-icon name="settings-outline"></ion-icon>Settings</a>
+    </div>
+    <div class="sidebar-logout">
+      <a href="login.html"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+    </div>
+  </div>
+
+  <!-- Main Section -->
+  <div class="main">
+    <!-- Navbar -->
+    <div class="main-navbar">
+      <ion-icon class="menu-toggle" name="menu-outline"></ion-icon>
+      <div class="search">
+        <input type="text" placeholder="What do you want to eat?" aria-label="Search food" />
+        <button class="search-btn">Search</button>
+      </div>
+      <div class="profile">
+        <a class="cart" href="cart.html">
+          <ion-icon name="cart-outline"></ion-icon>
+          <span class="cart-count" id="cart-count">0</span>
+        </a>
+        <a class="user" href="#"><ion-icon name="person-outline"></ion-icon></a>
+      </div>
+    </div>
+
+    <!-- Cart Content -->
+    <div class="cart-container">
+      <div class="cart-header">
+        <h1>Your Shopping Cart</h1>
+        <a href="page2.html" class="continue-shopping">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          Continue Shopping
+        </a>
+      </div>
+
+      <div class="cart-content">
+        <div class="cart-items-section">
+          <div class="cart-empty" id="cart-empty" style="display: none;">
+            <ion-icon name="cart-outline"></ion-icon>
+            <h3>Your cart is empty</h3>
+            <p>Add some delicious items to get started!</p>
+            <a href="page2.html" class="btn-primary">Browse Menu</a>
+          </div>
+
+          <div class="cart-items-list" id="cart-items-list">
+            <div class="cart-item-header">
+              <span>Item</span>
+              <span>Quantity</span>
+              <span>Price</span>
+              <span>Total</span>
+              <span>Action</span>
+            </div>
+            <div id="cart-items-container">
+              <!-- Cart items will be populated here -->
+            </div>
+          </div>
+        </div>
+
+        <div class="cart-summary">
+          <div class="summary-card">
+            <h3>Order Summary</h3>
+            <div class="summary-item">
+              <span>Items (<span id="summary-count">0</span>)</span>
+              <span>Rs. <span id="summary-subtotal">0.00</span></span>
+            </div>
+            <div class="summary-item">
+              <span>Delivery Fee</span>
+              <span>Rs. 50.00</span>
+            </div>
+            <div class="summary-item">
+              <span>Tax (13%)</span>
+              <span>Rs. <span id="summary-tax">0.00</span></span>
+            </div>
+            <hr>
+            <div class="summary-total">
+              <span>Total</span>
+              <span>Rs. <span id="summary-total">50.00</span></span>
+            </div>
+            <button class="checkout-btn" onclick="proceedToCheckout()">
+              Proceed to Checkout
+            </button>
+            <button class="clear-cart-btn" onclick="clearCart()">
+              Clear Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ionicons CDN -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  <!-- Cart JavaScript -->
+  <script src="./cart.js"></script>
+</body>
+</html>
