@@ -6,36 +6,217 @@
     <link rel="stylesheet" href="login.css" />
     <title>Login form</title>
 
-    <script>
-      function validateLogin() {
-        const username = document.getElementById("username").value.trim();
-        const password = document.getElementById("password").value.trim();
-
-        if (username === "" || password === "") {
-          alert("Please enter both username and password.");
-        } else {
-          // redirect to page2.html if both fields are filled
-          window.location.href = "page2.html";
-        }
-      }
-    </script>
+    
   </head>
   <body>
-    <div class="container">
-      <div class="form">
-        <h1>Login</h1>
-        <form class="form-input" onsubmit="return false;">
-          <input type="text" placeholder="Username" id="username" autofocus /><br />
-          <input type="password" placeholder="Password" id="password" /><br />
-          <input type="checkbox" name="checkbox" id="remember-me" />
-          <label for="remember-me">Remember Me</label><br />
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Welcome Back</h1>
+            <p>Please log in to your account</p>
+        </div>
 
-          <p>Don't have an account? <a href="register.html" target="_blank">Register</a></p>
+        <form id="loginForm" novalidate>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+                <div class="error-message" id="usernameError"></div>
+                <div class="success-message" id="usernameSuccess"></div>
+            </div>
 
-          <!-- Call the validation function instead of direct redirect -->
-          <button type="button" onclick="validateLogin()">Login</button>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <div class="error-message" id="passwordError"></div>
+                <div class="success-message" id="passwordSuccess"></div>
+                
+                <div class="password-requirements">
+                    <h4>Password Requirements:</h4>
+                    <div class="requirement" id="req-length">
+                        <span class="requirement-icon">○</span>
+                        At least 8 characters
+                    </div>
+                    <div class="requirement" id="req-uppercase">
+                        <span class="requirement-icon">○</span>
+                        At least one uppercase letter
+                    </div>
+                    <div class="requirement" id="req-lowercase">
+                        <span class="requirement-icon">○</span>
+                        At least one lowercase letter
+                    </div>
+                    <div class="requirement" id="req-number">
+                        <span class="requirement-icon">○</span>
+                        At least one number
+                    </div>
+                    <div class="requirement" id="req-special">
+                        <span class="requirement-icon">○</span>
+                        At least one special character (!@#$%^&*)
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="login-btn">Log In</button>
         </form>
-      </div>
+
+          <div class="register-link">
+            <p>Don't have an account?</p>
+            <a href="register.html">Please register</a>
+        </div>
     </div>
-  </body>
+    </div>
+
+    <script>
+        class LoginValidator {
+            constructor() {
+                this.form = document.getElementById('loginForm');
+                this.username = document.getElementById('username');
+                this.password = document.getElementById('password');
+                
+                this.initializeEventListeners();
+            }
+
+            initializeEventListeners() {
+                // Real-time validation
+                this.username.addEventListener('input', () => this.validateUsername());
+                this.password.addEventListener('input', () => this.validatePassword());
+                
+                // Form submission
+                this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+            }
+
+            validateUsername() {
+                const username = this.username.value.trim();
+                const usernameError = document.getElementById('usernameError');
+                const usernameSuccess = document.getElementById('usernameSuccess');
+
+                if (username === '') {
+                    this.showError(this.username, usernameError, 'Username is required');
+                    this.hideSuccess(usernameSuccess);
+                    return false;
+                }
+
+                if (username.length < 3) {
+                    this.showError(this.username, usernameError, 'Username must be at least 3 characters');
+                    this.hideSuccess(usernameSuccess);
+                    return false;
+                }
+
+                if (username.length > 20) {
+                    this.showError(this.username, usernameError, 'Username must be less than 20 characters');
+                    this.hideSuccess(usernameSuccess);
+                    return false;
+                }
+
+                if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+                    this.showError(this.username, usernameError, 'Username can only contain letters, numbers, and underscores');
+                    this.hideSuccess(usernameSuccess);
+                    return false;
+                }
+
+                this.showSuccess(this.username, usernameSuccess, 'Username is valid');
+                this.hideError(usernameError);
+                return true;
+            }
+
+            validatePassword() {
+                const password = this.password.value;
+                const passwordError = document.getElementById('passwordError');
+                const passwordSuccess = document.getElementById('passwordSuccess');
+
+                // Password requirements
+                const requirements = {
+                    length: password.length >= 8,
+                    uppercase: /[A-Z]/.test(password),
+                    lowercase: /[a-z]/.test(password),
+                    number: /[0-9]/.test(password),
+                    special: /[!@#$%^&*(),.?":{}|<>]/.test(password)
+                };
+
+                // Update visual requirements
+                this.updateRequirement('req-length', requirements.length);
+                this.updateRequirement('req-uppercase', requirements.uppercase);
+                this.updateRequirement('req-lowercase', requirements.lowercase);
+                this.updateRequirement('req-number', requirements.number);
+                this.updateRequirement('req-special', requirements.special);
+
+                if (password === '') {
+                    this.showError(this.password, passwordError, 'Password is required');
+                    this.hideSuccess(passwordSuccess);
+                    return false;
+                }
+
+                // Check if all requirements are met
+                const allRequirementsMet = Object.values(requirements).every(req => req);
+
+                if (!allRequirementsMet) {
+                    this.showError(this.password, passwordError, 'Password does not meet all requirements');
+                    this.hideSuccess(passwordSuccess);
+                    return false;
+                }
+
+                this.showSuccess(this.password, passwordSuccess, 'Password is strong');
+                this.hideError(passwordError);
+                return true;
+            }
+
+            updateRequirement(requirementId, isValid) {
+                const requirement = document.getElementById(requirementId);
+                const icon = requirement.querySelector('.requirement-icon');
+                
+                if (isValid) {
+                    requirement.classList.add('valid');
+                    requirement.classList.remove('invalid');
+                    icon.textContent = '✓';
+                } else {
+                    requirement.classList.add('invalid');
+                    requirement.classList.remove('valid');
+                    icon.textContent = '○';
+                }
+            }
+
+            showError(input, errorElement, message) {
+                input.classList.add('input-invalid');
+                input.classList.remove('input-valid');
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+            }
+
+            showSuccess(input, successElement, message) {
+                input.classList.add('input-valid');
+                input.classList.remove('input-invalid');
+                successElement.textContent = message;
+                successElement.style.display = 'block';
+            }
+
+            hideError(errorElement) {
+                errorElement.style.display = 'none';
+            }
+
+            hideSuccess(successElement) {
+                successElement.style.display = 'none';
+            }
+
+            handleSubmit(e) {
+                e.preventDefault();
+
+                // Validate all fields
+                const isUsernameValid = this.validateUsername();
+                const isPasswordValid = this.validatePassword();
+
+                if (isUsernameValid && isPasswordValid) {
+                    // All validations passed
+                    alert('Login successful! Redirecting...');
+                    window.location.href = "page2.html";
+                } else {
+                    // Show general error message
+                    alert('Please enter the correct details.');
+                }
+            }
+        }
+
+        // Initialize the validator when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new LoginValidator();
+        });
+    </script>
+</body>
 </html>
