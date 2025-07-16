@@ -34,9 +34,10 @@
     <div class="main-navbar">
       <ion-icon class="menu-toggle" name="menu-outline"></ion-icon>
       <div class="search">
-        <input type="text" placeholder="What do you want to eat?" aria-label="Search food" />
-        <button class="search-btn">Search</button>
-      </div>
+  <input type="text" id="searchInput" placeholder="What do you want to eat?" aria-label="Search food" />
+  <button class="search-btn" id="search-btn">Search</button>
+</div>
+
       <div class="profile">
         <!-- Updated cart link to open cart page -->
         <a class="cart" href="./cart.html">
@@ -92,7 +93,7 @@
     <!-- Menu Category Filter -->
     <div class="main-menus">
       <div class="main-filter">
-          <h2 class="main-title">Menu <br />Category</h2>
+          <h2 class="main-title1">Menu Category</h2>
           <div class="main-arrow">
             <ion-icon class="back-menus" name="chevron-back-circle-outline"></ion-icon>
             <ion-icon class="next-menus" name="chevron-forward-circle-outline"></ion-icon>
@@ -356,5 +357,39 @@
 
   <!--js code-->
   <script src="./cart.js"></script>
+
+<script>
+  document.getElementById("search-btn").addEventListener("click", function () {
+    const query = document.getElementById("searchInput").value.trim().toLowerCase();
+    const items = document.querySelectorAll(".menu-item");
+
+    if (query === "") {
+      alert("Please enter a search term.");
+      return;
+    }
+
+    let found = false;
+
+    items.forEach(item => {
+      const title = item.querySelector("h4").textContent.toLowerCase();
+      const description = item.querySelector("p").textContent.toLowerCase();
+
+      if (title.includes(query) || description.includes(query)) {
+        item.style.display = "block"; // show matching item
+        found = true;
+      } else {
+        item.style.display = "none";  // hide non-matching item
+      }
+    });
+
+    const resultDiv = document.getElementById("results");
+    if (!found) {
+      resultDiv.innerHTML = `No items found for "<strong>${query}</strong>"`;
+    } else {
+      resultDiv.innerHTML = `Showing results for "<strong>${query}</strong>"`;
+    }
+  });
+</script>
+
 </body>
 </html>

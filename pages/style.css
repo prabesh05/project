@@ -200,6 +200,7 @@ body {
 
 .main-title{
     font-size:20px;
+    color:white;
 }
 
 .main-arrow{
@@ -290,6 +291,9 @@ body {
     align-items:center;
     margin-top:1.5rem;
     gap:1rem;
+}
+.main-title{
+    color:black;
 }
 
 .back-menus, .next-menus{
